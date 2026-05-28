@@ -825,7 +825,7 @@ function renderFolderChips(containerId, folderList, defaultSelected, onSelect) {
 async function init() {
   // Register service worker for offline support
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch((e) => {
+    navigator.serviceWorker.register('./sw.js').catch((e) => {
       console.warn('SW registration failed:', e);
     });
   }

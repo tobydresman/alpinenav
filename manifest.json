@@ -2,7 +2,7 @@
   "name": "AlpineNav",
   "short_name": "AlpineNav",
   "description": "Offline GPS navigation for mountaineering and mountain biking",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0f1923",

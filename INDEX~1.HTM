@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Prevents zooming on tap — important for a map app -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- iOS PWA: hide Safari UI when launched from home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AlpineNav">
+  <meta name="theme-color" content="#0f1923">
+  <title>AlpineNav</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Full-screen map ──────────────────────────────────────────────── -->
+  <div id="map"></div>
+
+  <!-- ── Top status bar ────────────────────────────────────────────────── -->
+  <div id="topbar">
+    <span id="topbar-title">⛰️ AlpineNav</span>
+    <span id="topbar-status"></span>
+  </div>
+
+  <!-- ── "Tap to place" hint shown in waypoint-adding mode ─────────────── -->
+  <div id="add-hint" class="hidden">Tap map to place waypoint</div>
+
+  <!-- ── Map control buttons ───────────────────────────────────────────── -->
+  <div id="map-controls">
+    <button id="btn-centre" class="map-btn" title="Centre on my location">◎</button>
+  </div>
+
+  <!-- ── Floating action button + menu ─────────────────────────────────── -->
+  <button id="fab" class="fab" title="Actions">+</button>
+  <div id="fab-menu" class="hidden">
+    <button class="fab-item" id="fab-add-wpt">📍 Add waypoint here</button>
+    <button class="fab-item" id="fab-import">📂 Import GPX file</button>
+    <button class="fab-item" id="fab-download">⬇️ Download area offline</button>
+  </div>
+
+  <!-- ── Cancel button shown during waypoint-add mode ─────────────────── -->
+  <button id="btn-cancel-wpt" class="cancel-btn hidden">✕ Cancel</button>
+
+  <!-- ── Bottom tab bar ────────────────────────────────────────────────── -->
+  <nav id="tabbar">
+    <button class="tab active" data-tab="map">🗺️<span>Map</span></button>
+    <button class="tab" data-tab="library">📁<span>Library</span></button>
+    <button class="tab" data-tab="settings">⚙️<span>Settings</span></button>
+  </nav>
+
+  <!-- ── Library panel ─────────────────────────────────────────────────── -->
+  <div id="panel-library" class="panel hidden">
+    <div class="panel-header">
+      <button id="lib-back" class="panel-back hidden">‹ Back</button>
+      <h2 id="lib-title">Library</h2>
+      <button id="lib-new-folder" class="panel-btn">+ Folder</button>
+    </div>
+    <div id="lib-body" class="panel-body"></div>
+  </div>
+
+  <!-- ── Settings panel ────────────────────────────────────────────────── -->
+  <div id="panel-settings" class="panel hidden">
+    <div class="panel-header">
+      <div style="width:64px"></div>
+      <h2>Settings</h2>
+      <div style="width:64px"></div>
+    </div>
+    <div id="settings-body" class="panel-body"></div>
+  </div>
+
+  <!-- ── Overlay (dims the map behind sheets) ──────────────────────────── -->
+  <div id="overlay" class="hidden"></div>
+
+  <!-- ── Add Waypoint sheet ────────────────────────────────────────────── -->
+  <div id="sheet-wpt" class="sheet hidden">
+    <div class="sheet-handle"></div>
+    <h3>Save Waypoint</h3>
+    <p id="wpt-coords" class="mono-text"></p>
+    <input id="wpt-name" type="text" placeholder="Name  (e.g. Camp 2)" autocomplete="off">
+    <textarea id="wpt-desc" placeholder="Notes (optional)" rows="2"></textarea>
+    <p class="label">Folder</p>
+    <div id="wpt-folder-chips" class="chip-row"></div>
+    <div class="sheet-btns">
+      <button class="btn-sec" id="wpt-cancel">Cancel</button>
+      <button class="btn-pri" id="wpt-save">Save</button>
+    </div>
+  </div>
+
+  <!-- ── Import GPX sheet ──────────────────────────────────────────────── -->
+  <div id="sheet-import" class="sheet hidden">
+    <div class="sheet-handle"></div>
+    <h3>Import GPX</h3>
+    <p id="import-name" class="import-name"></p>
+    <p id="import-stats" class="import-stats"></p>
+    <p class="label">Save to folder</p>
+    <div id="import-folder-chips" class="chip-row"></div>
+    <div class="sheet-btns">
+      <button class="btn-sec" id="import-cancel">Cancel</button>
+      <button class="btn-pri" id="import-confirm">Import</button>
+    </div>
+  </div>
+
+  <!-- ── Download Area sheet ───────────────────────────────────────────── -->
+  <div id="sheet-download" class="sheet hidden">
+    <div class="sheet-handle"></div>
+    <h3>⬇️ Download Area</h3>
+    <p class="info-text">Caches map tiles for the area currently on screen so you can use the map without internet.</p>
+    <p id="dl-estimate" class="import-stats"></p>
+    <div id="dl-progress-wrap" class="hidden">
+      <div class="progress-track"><div id="dl-bar" style="width:0%"></div></div>
+      <p id="dl-progress-text" class="mono-text"></p>
+    </div>
+    <div class="sheet-btns">
+      <button class="btn-sec" id="dl-cancel">Cancel</button>
+      <button class="btn-pri" id="dl-start">Download</button>
+    </div>
+  </div>
+
+  <!-- ── New Folder sheet ──────────────────────────────────────────────── -->
+  <div id="sheet-folder" class="sheet hidden">
+    <div class="sheet-handle"></div>
+    <h3>New Folder</h3>
+    <p class="label">Icon</p>
+    <div id="folder-emoji-row" class="chip-row"></div>
+    <input id="folder-name" type="text" placeholder="Folder name" autocomplete="off">
+    <div class="sheet-btns">
+      <button class="btn-sec" id="folder-cancel">Cancel</button>
+      <button class="btn-pri" id="folder-save">Create</button>
+    </div>
+  </div>
+
+  <!-- ── Move Item sheet ───────────────────────────────────────────────── -->
+  <div id="sheet-move" class="sheet hidden">
+    <div class="sheet-handle"></div>
+    <h3>Move to folder</h3>
+    <div id="move-folder-list"></div>
+    <div class="sheet-btns" style="margin-top:8px">
+      <button class="btn-sec" id="move-cancel">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Hidden file input — triggered programmatically for GPX import -->
+  <input type="file" id="gpx-file-input" accept=".gpx,.GPX" style="display:none">
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="storage.js"></script>
+  <script src="gpxParser.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

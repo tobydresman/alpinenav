@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate AlpineNav Icons</title>
+<style>body{font-family:sans-serif;padding:24px;background:#0f1923;color:#e8edf2}</style>
+</head>
+<body>
+<h2>AlpineNav Icon Generator</h2>
+<p>Open this file in any browser, then click the buttons below to download the two icon files. Put them in the <code>icons/</code> folder.</p>
+<br>
+<button onclick="generate(192)" style="padding:12px 20px;margin-right:12px;font-size:15px;cursor:pointer">Download icon-192.png</button>
+<button onclick="generate(512)" style="padding:12px 20px;font-size:15px;cursor:pointer">Download icon-512.png</button>
+
+<canvas id="c" style="display:block;margin-top:20px;border-radius:12px"></canvas>
+
+<script>
+function generate(size) {
+  const canvas = document.getElementById('c');
+  canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#0f1923';
+  ctx.fillRect(0, 0, size, size);
+
+  // Mountain silhouette
+  ctx.fillStyle = '#2a3a4a';
+  ctx.beginPath();
+  ctx.moveTo(0, size);
+  ctx.lineTo(size * 0.25, size * 0.45);
+  ctx.lineTo(size * 0.5, size * 0.65);
+  ctx.lineTo(size * 0.65, size * 0.3);
+  ctx.lineTo(size, size * 0.55);
+  ctx.lineTo(size, size);
+  ctx.closePath();
+  ctx.fill();
+
+  // Main peak
+  ctx.fillStyle = '#3a4a5a';
+  ctx.beginPath();
+  ctx.moveTo(size * 0.3, size);
+  ctx.lineTo(size * 0.65, size * 0.28);
+  ctx.lineTo(size, size * 0.55);
+  ctx.lineTo(size, size);
+  ctx.closePath();
+  ctx.fill();
+
+  // Snow cap
+  ctx.fillStyle = '#e8edf2';
+  ctx.beginPath();
+  ctx.moveTo(size * 0.65, size * 0.28);
+  ctx.lineTo(size * 0.54, size * 0.44);
+  ctx.lineTo(size * 0.76, size * 0.44);
+  ctx.closePath();
+  ctx.fill();
+
+  // Location pin
+  const px = size * 0.65, py = size * 0.28;
+  ctx.fillStyle = '#00b4d8';
+  ctx.beginPath();
+  ctx.arc(px, py - size * 0.08, size * 0.07, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Download
+  const a = document.createElement('a');
+  a.download = `icon-${size}.png`;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>

@@ -8,15 +8,17 @@
 const APP_CACHE = 'alpinenav-app-v1';
 const TILE_CACHE = 'alpinenav-tiles-v1';
 
-// Files that make up the app shell
+// Build app shell URLs relative to the SW's own location.
+// This works correctly whether hosted at / or /alpinenav/ (GitHub Pages subpath).
+const BASE = self.registration.scope; // e.g. https://user.github.io/alpinenav/
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/storage.js',
-  '/gpxParser.js',
-  '/manifest.json',
+  BASE,
+  BASE + 'index.html',
+  BASE + 'style.css',
+  BASE + 'app.js',
+  BASE + 'storage.js',
+  BASE + 'gpxParser.js',
+  BASE + 'manifest.json',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -74,7 +76,7 @@ self.addEventListener('fetch', (event) => {
       // HTML: try network, fall back to cached index.html
       event.respondWith(
         fetch(event.request).catch(() =>
-          caches.match('/index.html')
+          caches.match(BASE + 'index.html')
         )
       );
     } else {

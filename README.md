@@ -15,15 +15,7 @@ That's it. No developer account. No fees.
 
 ---
 
-## Step 1 — Generate the app icons
-
-1. Open **`generate-icons.html`** in any browser (just double-click it)
-2. Click **"Download icon-192.png"** → save it into the `icons/` folder
-3. Click **"Download icon-512.png"** → save it into the `icons/` folder
-
----
-
-## Step 2 — Put the app online (free, takes 5 minutes)
+## Step 1 — Put the app online (free, takes 5 minutes)
 
 You need HTTPS hosting for GPS and offline to work. GitHub Pages is free and easy.
 
@@ -48,7 +40,7 @@ You need HTTPS hosting for GPS and offline to work. GitHub Pages is free and eas
 
 ---
 
-## Step 3 — Install on your iPhone
+## Step 2 — Install on your iPhone
 
 1. Open **Safari** on your iPhone (must be Safari, not Chrome)
 2. Go to your app URL (e.g. `https://yourusername.github.io/alpinenav`)
@@ -59,7 +51,7 @@ You need HTTPS hosting for GPS and offline to work. GitHub Pages is free and eas
 
 ---
 
-## Step 4 — Allow location access
+## Step 3 — Allow location access
 
 When you first open the app, Safari will ask for location permission.
 Tap **"Allow While Using App"**.

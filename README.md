@@ -7,7 +7,7 @@ No subscriptions. No app store. Runs in Safari and installs to your iPhone home 
 
 ## What you need
 
-| Thing | Cost |
+| Thing |
 |---|---|
 | A computer (any OS) |
 | A GitHub account |

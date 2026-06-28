@@ -15,28 +15,9 @@ That's it. No developer account. No fees.
 
 ---
 
-## Step 1 — Put the app online (free, takes 5 minutes)
+## Step 1 — Navigate to the site
 
-You need HTTPS hosting for GPS and offline to work. GitHub Pages is free and easy.
-
-### GitHub Pages (recommended)
-
-1. Go to **https://github.com/signup** and create a free account
-2. Click **"New repository"** (the green button)
-3. Name it `alpinenav`, set it to **Public**, click **Create repository**
-4. Click **"uploading an existing file"** on the next screen
-5. Drag **all the AlpineNav-PWA files** into the upload area (including the `icons/` folder)
-6. Click **"Commit changes"**
-7. Go to **Settings → Pages** (left sidebar)
-8. Under "Branch", select **main** and click Save
-9. Wait 1 minute, then your app is live at:
-   **`https://YOUR-USERNAME.github.io/alpinenav`**
-
-### Alternative: Netlify (even faster, no account needed)
-
-1. Go to **https://app.netlify.com/drop**
-2. Drag the entire `AlpineNav-PWA` folder onto the page
-3. Get an instant URL like `https://random-name.netlify.app`
+Go To **`https://tobydresman.github.io/alpinenav`**
 
 ---
 

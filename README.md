@@ -169,7 +169,7 @@ Try deleting and re-adding to home screen. Make sure the hosting URL is still li
 
 ---
 
-## Future ideas (add these whenever you want!)
+## Future ideas
 
 - **Strava integration** — import your recent activities as routes
 - **GPX export** — export your saved waypoints/tracks back to GPX
@@ -177,4 +177,4 @@ Try deleting and re-adding to home screen. Make sure the hosting URL is still li
 - **Compass overlay** — bearing to next waypoint
 - **Custom waypoint colours** — different colours per category
 
-*Built for Toby's Alps adventure — have an amazing trip! ⛰️🚵*
+*Built for Toby's Alps adventure! ⛰️🚵*

@@ -9,9 +9,9 @@ No subscriptions. No app store. Runs in Safari and installs to your iPhone home 
 
 | Thing | Cost |
 |---|---|
-| A computer (any OS) | Already have it |
-| A GitHub account | Free — github.com/signup |
-| Your iPhone | Already have it |
+| A computer (any OS) |
+| A GitHub account |
+| Your iPhone |
 
 That's it. No developer account. No fees.
 
